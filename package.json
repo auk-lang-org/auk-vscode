@@ -1,0 +1,77 @@
+{
+  "name": "duck-lang",
+  "displayName": "Duck Language",
+  "description": "Syntax highlighting, diagnostics, quick fixes, hover, go to definition and formatting for the Duck programming language",
+  "version": "0.1.0",
+  "publisher": "duck-lang",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.82.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Formatters",
+    "Linters"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "onLanguage:duck"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "duck",
+        "aliases": [
+          "Duck",
+          "duck"
+        ],
+        "extensions": [
+          ".duck"
+        ],
+        "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "toml",
+        "filenames": [
+          "quack.toml"
+        ]
+      }
+    ],
+    "grammars": [
+      {
+        "language": "duck",
+        "scopeName": "source.duck",
+        "path": "./syntaxes/duck.tmLanguage.json"
+      }
+    ],
+    "configuration": {
+      "title": "Duck",
+      "properties": {
+        "duck.path": {
+          "type": "string",
+          "default": "duck",
+          "markdownDescription": "Path to the `duck` executable that runs the language server (`duck lsp`)."
+        },
+        "duck.trace.server": {
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "off",
+          "description": "Trace the JSON-RPC traffic between VS Code and the Duck language server."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "duck.restartServer",
+        "title": "Duck: Restart Language Server"
+      }
+    ]
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  }
+}

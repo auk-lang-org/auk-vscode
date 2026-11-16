@@ -1,0 +1,77 @@
+/// Doc comment: exercises every rule in duck.tmLanguage.json.
+// Plain line comment
+/* Block comment /* nested */ still a comment */
+
+pub struct Point { x: float, y: float }
+enum Shape { Circle(r: float), Rect(w: float, h: float), Empty }
+enum ParseErr { BadToken(at: int), Eof }
+shape Area { fn area(self): float }
+
+let MAX = 1_000
+let nums = [0, 42, 1_000_000, 0xff, 0xDEAD_beef, 0b1010_0101, 0o755, 3.14, 1e-9, 2.5E+10, 1_0.0_1]
+let chars = ['a', '\n', '\t', '\r', '\0', '\\', '\'', '"', '\u{1F986}']
+let s = "esc \n \t \" \\ \u{1F986} literal {{braces}} and {name} and {p.x:.2} and {n:>5}"
+let nested = "outer {xs.map(x => "inner {x + 1}").join(", ")} {m[{"k": 1}["k"]]} done"
+let raw = r"no {interp} \n here"
+let tri = """
+  multi {line} with {{ }}
+  """
+let rawtri = r"""{"name":"ann"}"""
+
+pub fn area(s: Shape): float {
+  match s {
+    Circle(r) => 3.14 * r ** 2
+    Rect(w, h) when w == h => w * w
+    Rect(w, h) => w * h
+    Empty => 0.0
+  }
+}
+
+fn fib(0): int = 0
+fn fib(1): int = 1
+fn fib(n: int): int = fib(n - 1) + fib(n - 2)
+
+fn find(xs: [Point], x: float): Point? = xs.find(p => p.x == x)
+fn parse(s: str): Value!ParseErr { fail(Eof) }
+fn save(t: Point): ()! uses fs, net { ?? }
+
+async fn get(url: str): str! uses net, time {
+  let page = await fetch(url)?
+  page
+}
+
+fn isqrt(n: int): int
+  requires n >= 0
+  ensures result * result <= n
+{ ?? }
+
+fn draw(xs: [any Area], acc: var int) {
+  var i = 0
+  i += 1
+  i = i +% 1 -% 2 *% 3
+  for k in 0..=10 { if k % 2 != 0 && k > 3 || k < 1 { continue } else { break } }
+  while i >= 0 { i -= 1 }
+  let v = loop { break 42 }
+  let name = find([], 1.0)?.x else 0.0
+  let n = int.parse("7") else return
+  let m = nums.max()!
+  let total = nums |> sum()
+  let ok_ = some(1) is some(_)
+  let t: bool = true && !false
+  let o = none
+  let r = ok(1)
+  let e = err("x")
+  push2(&xs, 7)
+  let bits = (n & 0xff) | (m << 8) ^ ~n >> 2
+  var h = 0
+  h ^= bits
+  h <<= 1
+  peek i * 2
+}
+
+imprint TABLE = build_table()
+
+test "isqrt" {
+  assert isqrt(17) == 4
+  assert (1, 2) == (1, 2)
+}
