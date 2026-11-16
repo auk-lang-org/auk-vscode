@@ -373,7 +373,7 @@
       "patterns": [
         {
           "name": "keyword.control.duck",
-          "match": "\\b(if|else|match|for|in|while|loop|break|continue|return|when|await)\\b"
+          "match": "\\b(if|else|match|for|in|while|loop|break|continue|return|when|await|catch)\\b"
         },
         {
           "name": "keyword.declaration.duck storage.type.duck",
