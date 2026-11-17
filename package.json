@@ -3,7 +3,7 @@
   "displayName": "Duck Language",
   "description": "Syntax highlighting, diagnostics, quick fixes, hover, go to definition and formatting for the Duck programming language",
   "version": "0.1.0",
-  "publisher": "duck-lang",
+  "publisher": "duckc",
   "license": "MIT",
   "engines": {
     "vscode": "^1.82.0"
@@ -15,7 +15,13 @@
   ],
   "main": "./extension.js",
   "activationEvents": [
-    "onLanguage:duck"
+    "onLanguage:duck",
+    "onCommand:duck.run",
+    "onCommand:duck.runWithArgs",
+    "onCommand:duck.test",
+    "onCommand:duck.debug",
+    "onDebugResolve:duck",
+    "onDebugDynamicConfigurations:duck"
   ],
   "contributes": {
     "languages": [
@@ -28,7 +34,11 @@
         "extensions": [
           ".duck"
         ],
-        "configuration": "./language-configuration.json"
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./icons/duck.svg",
+          "dark": "./icons/duck.svg"
+        }
       },
       {
         "id": "toml",
@@ -68,6 +78,149 @@
       {
         "command": "duck.restartServer",
         "title": "Duck: Restart Language Server"
+      },
+      {
+        "command": "duck.run",
+        "title": "Duck: Run File",
+        "icon": "$(play)"
+      },
+      {
+        "command": "duck.runWithArgs",
+        "title": "Duck: Run File with Arguments…",
+        "icon": "$(debug-alt)"
+      },
+      {
+        "command": "duck.test",
+        "title": "Duck: Test File",
+        "icon": "$(beaker)"
+      },
+      {
+        "command": "duck.debug",
+        "title": "Duck: Debug File",
+        "icon": "$(debug-alt-small)"
+      }
+    ],
+    "menus": {
+      "editor/title/run": [
+        {
+          "command": "duck.run",
+          "when": "resourceLangId == duck",
+          "group": "navigation@0"
+        },
+        {
+          "command": "duck.runWithArgs",
+          "when": "resourceLangId == duck",
+          "group": "navigation@1"
+        },
+        {
+          "command": "duck.test",
+          "when": "resourceLangId == duck",
+          "group": "navigation@2"
+        },
+        {
+          "command": "duck.debug",
+          "when": "resourceLangId == duck",
+          "group": "navigation@3"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "duck.run",
+          "when": "editorLangId == duck"
+        },
+        {
+          "command": "duck.runWithArgs",
+          "when": "editorLangId == duck"
+        },
+        {
+          "command": "duck.test",
+          "when": "editorLangId == duck"
+        },
+        {
+          "command": "duck.debug",
+          "when": "editorLangId == duck"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "duck.debug",
+        "key": "f5",
+        "when": "editorLangId == duck && !inDebugMode"
+      },
+      {
+        "command": "duck.run",
+        "key": "ctrl+f5",
+        "mac": "ctrl+f5",
+        "when": "editorLangId == duck && !inDebugMode"
+      }
+    ],
+    "breakpoints": [
+      {
+        "language": "duck"
+      }
+    ],
+    "debuggers": [
+      {
+        "type": "duck",
+        "label": "Duck",
+        "languages": [
+          "duck"
+        ],
+        "configurationAttributes": {
+          "launch": {
+            "required": [
+              "program"
+            ],
+            "properties": {
+              "program": {
+                "type": "string",
+                "description": "The .duck file to debug (with `fn main`).",
+                "default": "${file}"
+              },
+              "args": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Command-line arguments for the program.",
+                "default": []
+              },
+              "cwd": {
+                "type": "string",
+                "description": "The program's working directory.",
+                "default": "${fileDirname}"
+              },
+              "stopOnEntry": {
+                "type": "boolean",
+                "description": "Stop at the start of `main`.",
+                "default": false
+              }
+            }
+          }
+        },
+        "initialConfigurations": [
+          {
+            "type": "duck",
+            "request": "launch",
+            "name": "Debug Duck file",
+            "program": "${file}",
+            "cwd": "${fileDirname}"
+          }
+        ],
+        "configurationSnippets": [
+          {
+            "label": "Duck: Debug a file",
+            "description": "Debug a Duck program",
+            "body": {
+              "type": "duck",
+              "request": "launch",
+              "name": "Debug Duck file",
+              "program": "^\"\\${file}\"",
+              "cwd": "^\"\\${fileDirname}\""
+            }
+          }
+        ]
       }
     ]
   },

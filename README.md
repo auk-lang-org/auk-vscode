@@ -20,6 +20,30 @@ Syntax highlighting, editor configuration and language-server support for the Du
 - Language configuration: comment toggling, bracket matching, auto-closing pairs,
   indentation on `{` / `}`, `///` continuation on Enter, and `// region` folding markers.
 
+## Run and test
+
+A `.duck` editor gets buttons in its title bar (top right): **Run** (▶, also `Ctrl+F5`), **Run
+with Arguments…** (asks for them and remembers the last ones per file), **Test** (beaker) and
+**Debug** (also `F5`). Run and Test save the file and run `duck run <file>` / `duck test <file>`
+in a "Duck" terminal from the file's folder.
+
+## Debugging
+
+`F5` (or **Duck: Debug File**) debugs the active file through `duck dap`: click in the gutter
+for breakpoints (a line without code moves to the next one that has some), add function
+breakpoints in the Breakpoints view, and choose whether panics stop (**Uncaught panics**, on by
+default, or **All panics**, also those inside `catch`). When it stops: the call stack (one thread
+per task), locals with their parts (struct fields, enum variants, list elements, map entries)
+expandable, hover a name or a path like `p.x` / `xs[2]`, any Duck expression in Watch or the Debug
+Console (`xs.map(x => x * 2)`, calls to your functions; `total = 0` sets a `var`), edit a local's
+value in the Variables view, conditional breakpoints (`n > 3`), step over / into / out, pause. The
+program's output goes to the Debug Console. A `launch.json` entry:
+
+```json
+{ "type": "duck", "request": "launch", "name": "Debug", "program": "${file}",
+  "cwd": "${fileDirname}", "args": [], "stopOnEntry": false }
+```
+
 ## Language server
 
 `extension.js` (plain JavaScript, no build step) starts `duck lsp` through
@@ -81,7 +105,8 @@ Build `duck` (`cargo build --release` at the repository root) and put it on `PAT
 
 ## Testing
 
-The language server is tested end to end by `cargo test --test v2_lsp` (it spawns `duck lsp`
+The debug adapter is tested end to end by `cargo test --test debug` (it speaks DAP to
+`duck dap`). The language server is tested end to end by `cargo test --test v2_lsp` (it spawns `duck lsp`
 and speaks JSON-RPC to it).
 
 The grammar:
