@@ -1,9 +1,9 @@
 {
-  "name": "duck-lang",
-  "displayName": "Duck Language",
-  "description": "Syntax highlighting, diagnostics, quick fixes, hover, go to definition and formatting for the Duck programming language",
+  "name": "auk-lang",
+  "displayName": "Auk Language",
+  "description": "Syntax highlighting, diagnostics, quick fixes, hover, go to definition and formatting for the Auk programming language",
   "version": "0.1.0",
-  "publisher": "duckc",
+  "publisher": "aukc",
   "license": "MIT",
   "engines": {
     "vscode": "^1.82.0"
@@ -11,58 +11,71 @@
   "categories": [
     "Programming Languages",
     "Formatters",
-    "Linters"
+    "Linters",
+    "Themes"
   ],
   "main": "./extension.js",
   "activationEvents": [
-    "onLanguage:duck",
-    "onCommand:duck.run",
-    "onCommand:duck.runWithArgs",
-    "onCommand:duck.test",
-    "onCommand:duck.debug",
-    "onDebugResolve:duck",
-    "onDebugDynamicConfigurations:duck"
+    "onLanguage:auk",
+    "onCommand:auk.run",
+    "onCommand:auk.runWithArgs",
+    "onCommand:auk.test",
+    "onCommand:auk.debug",
+    "onDebugResolve:auk",
+    "onDebugDynamicConfigurations:auk"
   ],
   "contributes": {
     "languages": [
       {
-        "id": "duck",
+        "id": "auk",
         "aliases": [
-          "Duck",
-          "duck"
+          "Auk",
+          "auk"
         ],
         "extensions": [
-          ".duck"
+          ".auk"
         ],
         "configuration": "./language-configuration.json",
         "icon": {
-          "light": "./icons/duck.svg",
-          "dark": "./icons/duck.svg"
+          "light": "./icons/auk.svg",
+          "dark": "./icons/auk-dark.svg"
         }
       },
       {
         "id": "toml",
         "filenames": [
-          "quack.toml"
+          "raft.toml"
         ]
       }
     ],
     "grammars": [
       {
-        "language": "duck",
-        "scopeName": "source.duck",
-        "path": "./syntaxes/duck.tmLanguage.json"
+        "language": "auk",
+        "scopeName": "source.auk",
+        "path": "./syntaxes/auk.tmLanguage.json"
+      }
+    ],
+    "themes": [
+      {
+        "label": "Ice Floe",
+        "uiTheme": "vs",
+        "path": "./themes/ice-floe-color-theme.json"
+      },
+      {
+        "label": "Ice Floe Night",
+        "uiTheme": "vs-dark",
+        "path": "./themes/ice-floe-night-color-theme.json"
       }
     ],
     "configuration": {
-      "title": "Duck",
+      "title": "Auk",
       "properties": {
-        "duck.path": {
+        "auk.path": {
           "type": "string",
-          "default": "duck",
-          "markdownDescription": "Path to the `duck` executable that runs the language server (`duck lsp`)."
+          "default": "auk",
+          "markdownDescription": "Path to the `auk` executable that runs the language server (`auk lsp`)."
         },
-        "duck.trace.server": {
+        "auk.trace.server": {
           "type": "string",
           "enum": [
             "off",
@@ -70,102 +83,102 @@
             "verbose"
           ],
           "default": "off",
-          "description": "Trace the JSON-RPC traffic between VS Code and the Duck language server."
+          "description": "Trace the JSON-RPC traffic between VS Code and the Auk language server."
         }
       }
     },
     "commands": [
       {
-        "command": "duck.restartServer",
-        "title": "Duck: Restart Language Server"
+        "command": "auk.restartServer",
+        "title": "Auk: Restart Language Server"
       },
       {
-        "command": "duck.run",
-        "title": "Duck: Run File",
+        "command": "auk.run",
+        "title": "Auk: Run File",
         "icon": "$(play)"
       },
       {
-        "command": "duck.runWithArgs",
-        "title": "Duck: Run File with Arguments…",
+        "command": "auk.runWithArgs",
+        "title": "Auk: Run File with Arguments…",
         "icon": "$(debug-alt)"
       },
       {
-        "command": "duck.test",
-        "title": "Duck: Test File",
+        "command": "auk.test",
+        "title": "Auk: Test File",
         "icon": "$(beaker)"
       },
       {
-        "command": "duck.debug",
-        "title": "Duck: Debug File",
+        "command": "auk.debug",
+        "title": "Auk: Debug File",
         "icon": "$(debug-alt-small)"
       }
     ],
     "menus": {
       "editor/title/run": [
         {
-          "command": "duck.run",
-          "when": "resourceLangId == duck",
+          "command": "auk.run",
+          "when": "resourceLangId == auk",
           "group": "navigation@0"
         },
         {
-          "command": "duck.runWithArgs",
-          "when": "resourceLangId == duck",
+          "command": "auk.runWithArgs",
+          "when": "resourceLangId == auk",
           "group": "navigation@1"
         },
         {
-          "command": "duck.test",
-          "when": "resourceLangId == duck",
+          "command": "auk.test",
+          "when": "resourceLangId == auk",
           "group": "navigation@2"
         },
         {
-          "command": "duck.debug",
-          "when": "resourceLangId == duck",
+          "command": "auk.debug",
+          "when": "resourceLangId == auk",
           "group": "navigation@3"
         }
       ],
       "commandPalette": [
         {
-          "command": "duck.run",
-          "when": "editorLangId == duck"
+          "command": "auk.run",
+          "when": "editorLangId == auk"
         },
         {
-          "command": "duck.runWithArgs",
-          "when": "editorLangId == duck"
+          "command": "auk.runWithArgs",
+          "when": "editorLangId == auk"
         },
         {
-          "command": "duck.test",
-          "when": "editorLangId == duck"
+          "command": "auk.test",
+          "when": "editorLangId == auk"
         },
         {
-          "command": "duck.debug",
-          "when": "editorLangId == duck"
+          "command": "auk.debug",
+          "when": "editorLangId == auk"
         }
       ]
     },
     "keybindings": [
       {
-        "command": "duck.debug",
+        "command": "auk.debug",
         "key": "f5",
-        "when": "editorLangId == duck && !inDebugMode"
+        "when": "editorLangId == auk && !inDebugMode"
       },
       {
-        "command": "duck.run",
+        "command": "auk.run",
         "key": "ctrl+f5",
         "mac": "ctrl+f5",
-        "when": "editorLangId == duck && !inDebugMode"
+        "when": "editorLangId == auk && !inDebugMode"
       }
     ],
     "breakpoints": [
       {
-        "language": "duck"
+        "language": "auk"
       }
     ],
     "debuggers": [
       {
-        "type": "duck",
-        "label": "Duck",
+        "type": "auk",
+        "label": "Auk",
         "languages": [
-          "duck"
+          "auk"
         ],
         "configurationAttributes": {
           "launch": {
@@ -175,7 +188,7 @@
             "properties": {
               "program": {
                 "type": "string",
-                "description": "The .duck file to debug (with `fn main`).",
+                "description": "The .auk file to debug (with `fn main`).",
                 "default": "${file}"
               },
               "args": {
@@ -201,21 +214,21 @@
         },
         "initialConfigurations": [
           {
-            "type": "duck",
+            "type": "auk",
             "request": "launch",
-            "name": "Debug Duck file",
+            "name": "Debug Auk file",
             "program": "${file}",
             "cwd": "${fileDirname}"
           }
         ],
         "configurationSnippets": [
           {
-            "label": "Duck: Debug a file",
-            "description": "Debug a Duck program",
+            "label": "Auk: Debug a file",
+            "description": "Debug an Auk program",
             "body": {
-              "type": "duck",
+              "type": "auk",
               "request": "launch",
-              "name": "Debug Duck file",
+              "name": "Debug Auk file",
               "program": "^\"\\${file}\"",
               "cwd": "^\"\\${fileDirname}\""
             }

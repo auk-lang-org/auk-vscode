@@ -1,4 +1,4 @@
-/// Doc comment: exercises every rule in duck.tmLanguage.json.
+/// Doc comment: exercises every rule in auk.tmLanguage.json.
 // Plain line comment
 /* Block comment /* nested */ still a comment */
 

@@ -1,9 +1,9 @@
 {
   "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-  "name": "Duck",
-  "scopeName": "source.duck",
+  "name": "Auk",
+  "scopeName": "source.auk",
   "fileTypes": [
-    "duck"
+    "auk"
   ],
   "patterns": [
     {
@@ -66,32 +66,32 @@
     "comments": {
       "patterns": [
         {
-          "name": "comment.line.documentation.duck",
+          "name": "comment.line.documentation.auk",
           "begin": "///(?!/)",
           "end": "$",
           "beginCaptures": {
             "0": {
-              "name": "punctuation.definition.comment.duck"
+              "name": "punctuation.definition.comment.auk"
             }
           }
         },
         {
-          "name": "comment.line.double-slash.duck",
+          "name": "comment.line.double-slash.auk",
           "begin": "//",
           "end": "$",
           "beginCaptures": {
             "0": {
-              "name": "punctuation.definition.comment.duck"
+              "name": "punctuation.definition.comment.auk"
             }
           }
         },
         {
-          "name": "comment.block.duck",
+          "name": "comment.block.auk",
           "begin": "/\\*",
           "end": "\\*/",
           "captures": {
             "0": {
-              "name": "punctuation.definition.comment.duck"
+              "name": "punctuation.definition.comment.auk"
             }
           },
           "patterns": [
@@ -103,7 +103,7 @@
       ]
     },
     "block-comment-nested": {
-      "name": "comment.block.duck",
+      "name": "comment.block.auk",
       "begin": "/\\*",
       "end": "\\*/",
       "patterns": [
@@ -115,53 +115,53 @@
     "strings": {
       "patterns": [
         {
-          "name": "string.quoted.triple.raw.duck",
+          "name": "string.quoted.triple.raw.auk",
           "begin": "(r)(\"\"\")",
           "end": "\"\"\"",
           "beginCaptures": {
             "1": {
-              "name": "storage.type.string.duck"
+              "name": "storage.type.string.auk"
             },
             "2": {
-              "name": "punctuation.definition.string.begin.duck"
+              "name": "punctuation.definition.string.begin.auk"
             }
           },
           "endCaptures": {
             "0": {
-              "name": "punctuation.definition.string.end.duck"
+              "name": "punctuation.definition.string.end.auk"
             }
           }
         },
         {
-          "name": "string.quoted.double.raw.duck",
+          "name": "string.quoted.double.raw.auk",
           "begin": "(r)(\")",
           "end": "\"",
           "beginCaptures": {
             "1": {
-              "name": "storage.type.string.duck"
+              "name": "storage.type.string.auk"
             },
             "2": {
-              "name": "punctuation.definition.string.begin.duck"
+              "name": "punctuation.definition.string.begin.auk"
             }
           },
           "endCaptures": {
             "0": {
-              "name": "punctuation.definition.string.end.duck"
+              "name": "punctuation.definition.string.end.auk"
             }
           }
         },
         {
-          "name": "string.quoted.triple.duck",
+          "name": "string.quoted.triple.auk",
           "begin": "\"\"\"",
           "end": "\"\"\"",
           "beginCaptures": {
             "0": {
-              "name": "punctuation.definition.string.begin.duck"
+              "name": "punctuation.definition.string.begin.auk"
             }
           },
           "endCaptures": {
             "0": {
-              "name": "punctuation.definition.string.end.duck"
+              "name": "punctuation.definition.string.end.auk"
             }
           },
           "patterns": [
@@ -171,17 +171,17 @@
           ]
         },
         {
-          "name": "string.quoted.double.duck",
+          "name": "string.quoted.double.auk",
           "begin": "\"",
           "end": "\"",
           "beginCaptures": {
             "0": {
-              "name": "punctuation.definition.string.begin.duck"
+              "name": "punctuation.definition.string.begin.auk"
             }
           },
           "endCaptures": {
             "0": {
-              "name": "punctuation.definition.string.end.duck"
+              "name": "punctuation.definition.string.end.auk"
             }
           },
           "patterns": [
@@ -195,15 +195,15 @@
     "string-content": {
       "patterns": [
         {
-          "name": "constant.character.escape.duck",
+          "name": "constant.character.escape.auk",
           "match": "\\\\(?:[ntr0\\\\\\\"']|u\\{[0-9a-fA-F]{1,6}\\})"
         },
         {
-          "name": "invalid.illegal.escape.duck",
+          "name": "invalid.illegal.escape.auk",
           "match": "\\\\."
         },
         {
-          "name": "constant.character.escape.brace.duck",
+          "name": "constant.character.escape.brace.auk",
           "match": "\\{\\{|\\}\\}"
         },
         {
@@ -212,18 +212,18 @@
       ]
     },
     "interpolation": {
-      "name": "meta.interpolation.duck",
-      "contentName": "meta.embedded.line.duck source.duck",
+      "name": "meta.interpolation.auk",
+      "contentName": "meta.embedded.line.auk source.auk",
       "begin": "\\{",
       "end": "\\}",
       "beginCaptures": {
         "0": {
-          "name": "punctuation.section.interpolation.begin.duck"
+          "name": "punctuation.section.interpolation.begin.auk"
         }
       },
       "endCaptures": {
         "0": {
-          "name": "punctuation.section.interpolation.end.duck"
+          "name": "punctuation.section.interpolation.end.auk"
         }
       },
       "patterns": [
@@ -239,10 +239,10 @@
       "match": "(:)([<>^]?[+\\-]?0?[0-9]*(?:\\.[0-9]+)?[a-zA-Z%]?)(?=\\})",
       "captures": {
         "1": {
-          "name": "punctuation.separator.format.duck"
+          "name": "punctuation.separator.format.auk"
         },
         "2": {
-          "name": "constant.other.format-spec.duck"
+          "name": "constant.other.format-spec.auk"
         }
       }
     },
@@ -251,12 +251,12 @@
       "end": "\\}",
       "beginCaptures": {
         "0": {
-          "name": "punctuation.section.braces.begin.duck"
+          "name": "punctuation.section.braces.begin.auk"
         }
       },
       "endCaptures": {
         "0": {
-          "name": "punctuation.section.braces.end.duck"
+          "name": "punctuation.section.braces.end.auk"
         }
       },
       "patterns": [
@@ -268,22 +268,22 @@
     "chars": {
       "patterns": [
         {
-          "name": "string.quoted.single.char.duck",
+          "name": "string.quoted.single.char.auk",
           "match": "(')(\\\\(?:[ntr0\\\\\\\"']|u\\{[0-9a-fA-F]{1,6}\\})|[^'\\\\\\n])(')",
           "captures": {
             "1": {
-              "name": "punctuation.definition.char.begin.duck"
+              "name": "punctuation.definition.char.begin.auk"
             },
             "2": {
               "patterns": [
                 {
-                  "name": "constant.character.escape.duck",
+                  "name": "constant.character.escape.auk",
                   "match": "\\\\(?:[ntr0\\\\\\\"']|u\\{[0-9a-fA-F]{1,6}\\})"
                 }
               ]
             },
             "3": {
-              "name": "punctuation.definition.char.end.duck"
+              "name": "punctuation.definition.char.end.auk"
             }
           }
         }
@@ -292,42 +292,42 @@
     "numbers": {
       "patterns": [
         {
-          "name": "constant.numeric.hex.duck",
+          "name": "constant.numeric.hex.auk",
           "match": "\\b0x[0-9a-fA-F][0-9a-fA-F_]*\\b"
         },
         {
-          "name": "constant.numeric.binary.duck",
+          "name": "constant.numeric.binary.auk",
           "match": "\\b0b[01][01_]*\\b"
         },
         {
-          "name": "constant.numeric.octal.duck",
+          "name": "constant.numeric.octal.auk",
           "match": "\\b0o[0-7][0-7_]*\\b"
         },
         {
-          "name": "constant.numeric.float.duck",
+          "name": "constant.numeric.float.auk",
           "match": "\\b[0-9][0-9_]*(?:\\.[0-9][0-9_]*(?:[eE][+\\-]?[0-9][0-9_]*)?|[eE][+\\-]?[0-9][0-9_]*)\\b"
         },
         {
-          "name": "constant.numeric.integer.duck",
+          "name": "constant.numeric.integer.auk",
           "match": "\\b[0-9][0-9_]*\\b"
         }
       ]
     },
     "hole": {
-      "name": "invalid.illegal.hole.duck",
+      "name": "invalid.illegal.hole.auk",
       "match": "\\?\\?"
     },
     "fn-decl": {
       "match": "\\b(?:(async)\\s+)?(fn)\\s+([A-Za-z_][A-Za-z0-9_]*)",
       "captures": {
         "1": {
-          "name": "storage.modifier.async.duck"
+          "name": "storage.modifier.async.auk"
         },
         "2": {
-          "name": "keyword.declaration.function.duck storage.type.function.duck"
+          "name": "keyword.declaration.function.auk storage.type.function.auk"
         },
         "3": {
-          "name": "entity.name.function.duck"
+          "name": "entity.name.function.auk"
         }
       }
     },
@@ -335,10 +335,10 @@
       "match": "\\b(struct|enum|shape)\\s+([A-Z][A-Za-z0-9_]*)",
       "captures": {
         "1": {
-          "name": "keyword.declaration.type.duck storage.type.duck"
+          "name": "keyword.declaration.type.auk storage.type.auk"
         },
         "2": {
-          "name": "entity.name.type.duck"
+          "name": "entity.name.type.auk"
         }
       }
     },
@@ -346,7 +346,7 @@
       "match": "\\b(test)\\s+(?=\\\")",
       "captures": {
         "1": {
-          "name": "keyword.other.test.duck"
+          "name": "keyword.other.test.auk"
         }
       }
     },
@@ -355,16 +355,16 @@
       "end": "(?=[{=]|//|$)",
       "beginCaptures": {
         "0": {
-          "name": "keyword.other.uses.duck"
+          "name": "keyword.other.uses.auk"
         }
       },
       "patterns": [
         {
-          "name": "support.constant.effect.duck",
+          "name": "support.constant.effect.auk",
           "match": "\\b[a-z_][A-Za-z0-9_]*\\b"
         },
         {
-          "name": "punctuation.separator.comma.duck",
+          "name": "punctuation.separator.comma.auk",
           "match": ","
         }
       ]
@@ -372,39 +372,39 @@
     "keywords": {
       "patterns": [
         {
-          "name": "keyword.control.duck",
+          "name": "keyword.control.auk",
           "match": "\\b(if|else|match|for|in|while|loop|break|continue|return|when|await|catch)\\b"
         },
         {
-          "name": "keyword.declaration.duck storage.type.duck",
+          "name": "keyword.declaration.auk storage.type.auk",
           "match": "\\b(fn|let|var|struct|enum|shape)\\b"
         },
         {
-          "name": "storage.modifier.duck",
+          "name": "storage.modifier.auk",
           "match": "\\b(pub|async|any)\\b"
         },
         {
-          "name": "keyword.other.contract.duck",
+          "name": "keyword.other.contract.auk",
           "match": "\\b(requires|ensures)\\b"
         },
         {
-          "name": "keyword.other.duck",
+          "name": "keyword.other.auk",
           "match": "\\b(test|assert|imprint|peek|uses|is)\\b"
         },
         {
-          "name": "constant.language.boolean.duck",
+          "name": "constant.language.boolean.auk",
           "match": "\\b(true|false)\\b"
         },
         {
-          "name": "constant.language.none.duck",
+          "name": "constant.language.none.auk",
           "match": "\\bnone\\b"
         },
         {
-          "name": "support.function.builtin.duck",
+          "name": "support.function.builtin.auk",
           "match": "\\b(some|ok|err|fail)\\b"
         },
         {
-          "name": "variable.language.self.duck",
+          "name": "variable.language.self.auk",
           "match": "\\b(self|Self|result)\\b"
         }
       ]
@@ -422,10 +422,10 @@
               ]
             },
             "2": {
-              "name": "keyword.operator.type-suffix.duck"
+              "name": "keyword.operator.type-suffix.auk"
             },
             "3": {
-              "name": "entity.name.type.duck"
+              "name": "entity.name.type.auk"
             }
           }
         },
@@ -433,7 +433,7 @@
           "match": "(?<=[\\)\\]])([?!])(?=\\s*(?:\\buses\\b|\\{|=\\s|$))",
           "captures": {
             "1": {
-              "name": "keyword.operator.type-suffix.duck"
+              "name": "keyword.operator.type-suffix.auk"
             }
           }
         },
@@ -445,15 +445,15 @@
     "type-name": {
       "patterns": [
         {
-          "name": "support.type.primitive.duck",
+          "name": "support.type.primitive.auk",
           "match": "\\b(int|float|bool|char|str|Value)\\b"
         },
         {
-          "name": "entity.name.type.enum-member.duck variable.other.enummember.duck",
+          "name": "entity.name.type.enum-member.auk variable.other.enummember.auk",
           "match": "\\b[A-Z][A-Za-z0-9_]*(?=\\s*\\()"
         },
         {
-          "name": "entity.name.type.duck",
+          "name": "entity.name.type.auk",
           "match": "\\b[A-Z][A-Za-z0-9_]*\\b"
         }
       ]
@@ -461,71 +461,71 @@
     "operators": {
       "patterns": [
         {
-          "name": "keyword.operator.arrow.duck",
+          "name": "keyword.operator.arrow.auk",
           "match": "=>"
         },
         {
-          "name": "keyword.operator.pipe.duck",
+          "name": "keyword.operator.pipe.auk",
           "match": "\\|>"
         },
         {
-          "name": "keyword.operator.optional-chain.duck",
+          "name": "keyword.operator.optional-chain.auk",
           "match": "\\?\\."
         },
         {
-          "name": "keyword.operator.range.duck",
+          "name": "keyword.operator.range.auk",
           "match": "\\.\\.=?"
         },
         {
-          "name": "keyword.operator.arithmetic.wrapping.duck",
+          "name": "keyword.operator.arithmetic.wrapping.auk",
           "match": "[+\\-*]%"
         },
         {
-          "name": "keyword.operator.arithmetic.power.duck",
+          "name": "keyword.operator.arithmetic.power.auk",
           "match": "\\*\\*"
         },
         {
-          "name": "keyword.operator.comparison.duck",
+          "name": "keyword.operator.comparison.auk",
           "match": "==|!=|<=|>="
         },
         {
-          "name": "keyword.operator.logical.duck",
+          "name": "keyword.operator.logical.auk",
           "match": "&&|\\|\\|"
         },
         {
-          "name": "keyword.operator.assignment.compound.duck",
+          "name": "keyword.operator.assignment.compound.auk",
           "match": "<<=|>>=|[&|^]="
         },
         {
-          "name": "keyword.operator.bitwise.shift.duck",
+          "name": "keyword.operator.bitwise.shift.auk",
           "match": "<<|>>"
         },
         {
-          "name": "keyword.operator.assignment.compound.duck",
+          "name": "keyword.operator.assignment.compound.auk",
           "match": "[+\\-*/%]="
         },
         {
-          "name": "keyword.operator.assignment.duck",
+          "name": "keyword.operator.assignment.auk",
           "match": "="
         },
         {
-          "name": "keyword.operator.comparison.duck",
+          "name": "keyword.operator.comparison.auk",
           "match": "[<>]"
         },
         {
-          "name": "keyword.operator.arithmetic.duck",
+          "name": "keyword.operator.arithmetic.auk",
           "match": "[+\\-*/%]"
         },
         {
-          "name": "keyword.operator.try.duck",
+          "name": "keyword.operator.try.auk",
           "match": "[?!]"
         },
         {
-          "name": "keyword.operator.reference.duck",
+          "name": "keyword.operator.reference.auk",
           "match": "(?<=[(,])&|(?<=[(,] )&"
         },
         {
-          "name": "keyword.operator.bitwise.duck",
+          "name": "keyword.operator.bitwise.auk",
           "match": "[&|^~]"
         }
       ]
@@ -534,32 +534,32 @@
       "match": "\\b([a-z_][A-Za-z0-9_]*)\\s*(?=\\()",
       "captures": {
         "1": {
-          "name": "entity.name.function.call.duck"
+          "name": "entity.name.function.call.auk"
         }
       }
     },
     "punctuation": {
       "patterns": [
         {
-          "name": "punctuation.separator.comma.duck",
+          "name": "punctuation.separator.comma.auk",
           "match": ","
         },
         {
-          "name": "punctuation.separator.colon.duck",
+          "name": "punctuation.separator.colon.auk",
           "match": ":"
         },
         {
-          "name": "punctuation.accessor.duck",
+          "name": "punctuation.accessor.auk",
           "match": "\\."
         },
         {
-          "name": "punctuation.brackets.duck",
+          "name": "punctuation.brackets.auk",
           "match": "[\\[\\]()]"
         }
       ]
     },
     "identifiers": {
-      "name": "variable.other.duck",
+      "name": "variable.other.auk",
       "match": "\\b[a-z_][A-Za-z0-9_]*\\b"
     }
   }

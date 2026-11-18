@@ -1,4 +1,4 @@
-// Starts `duck lsp` (the Duck language server) for .duck files. Plain JS, no build step.
+// Starts `auk lsp` (the Auk language server) for .auk files. Plain JS, no build step.
 'use strict';
 
 const vscode = require('vscode');
@@ -7,23 +7,23 @@ const { LanguageClient, TransportKind } = require('vscode-languageclient/node');
 let client;
 
 function serverOptions() {
-  const command = vscode.workspace.getConfiguration('duck').get('path') || 'duck';
+  const command = vscode.workspace.getConfiguration('auk').get('path') || 'auk';
   const run = { command, args: ['lsp'], transport: TransportKind.stdio };
   return { run, debug: run };
 }
 
 async function start(context) {
-  client = new LanguageClient('duck', 'Duck Language Server', serverOptions(), {
-    documentSelector: [{ scheme: 'file', language: 'duck' }],
-    outputChannelName: 'Duck Language Server',
+  client = new LanguageClient('auk', 'Auk Language Server', serverOptions(), {
+    documentSelector: [{ scheme: 'file', language: 'auk' }],
+    outputChannelName: 'Auk Language Server',
   });
   try {
     await client.start();
   } catch (err) {
-    const path = vscode.workspace.getConfiguration('duck').get('path') || 'duck';
+    const path = vscode.workspace.getConfiguration('auk').get('path') || 'auk';
     vscode.window.showErrorMessage(
       `Could not start \`${path} lsp\`: ${err && err.message ? err.message : err}. ` +
-        'Install duck or set "duck.path" to the duck executable.'
+        'Install auk or set "auk.path" to the auk executable.'
     );
   }
 }
@@ -53,13 +53,13 @@ function splitArgs(line) {
 
 let terminal;
 
-// Save the active .duck file, then run `duck <sub> <file> [args...]` in a reused "Duck"
+// Save the active .auk file, then run `auk <sub> <file> [args...]` in a reused "Auk"
 // terminal whose working directory is the file's folder (so relative paths like
 // `expenses.txt` resolve next to the program).
 async function runInTerminal(sub, args) {
   const editor = vscode.window.activeTextEditor;
-  if (!editor || editor.document.languageId !== 'duck') {
-    vscode.window.showWarningMessage('Open a .duck file to run it.');
+  if (!editor || editor.document.languageId !== 'auk') {
+    vscode.window.showWarningMessage('Open a .auk file to run it.');
     return;
   }
   const doc = editor.document;
@@ -71,45 +71,45 @@ async function runInTerminal(sub, args) {
   const file = doc.uri.fsPath;
   const dir = require('path').dirname(file);
   if (!terminal || terminal.exitStatus !== undefined) {
-    terminal = vscode.window.createTerminal({ name: 'Duck', cwd: dir });
+    terminal = vscode.window.createTerminal({ name: 'Auk', cwd: dir });
   }
   terminal.show(true);
-  const duck = vscode.workspace.getConfiguration('duck').get('path') || 'duck';
-  const cmd = [duck, sub, file, ...args].map(quote).join(' ');
+  const auk = vscode.workspace.getConfiguration('auk').get('path') || 'auk';
+  const cmd = [auk, sub, file, ...args].map(quote).join(' ');
   terminal.sendText(`cd ${quote(dir)} && ${cmd}`);
 }
 
-// The debugger: `duck dap` speaks the Debug Adapter Protocol on stdin/stdout.
+// The debugger: `auk dap` speaks the Debug Adapter Protocol on stdin/stdout.
 const debugAdapter = {
   createDebugAdapterDescriptor() {
-    const duck = vscode.workspace.getConfiguration('duck').get('path') || 'duck';
-    return new vscode.DebugAdapterExecutable(duck, ['dap']);
+    const auk = vscode.workspace.getConfiguration('auk').get('path') || 'auk';
+    return new vscode.DebugAdapterExecutable(auk, ['dap']);
   },
 };
 
-// F5 with no launch.json: debug the active .duck file.
+// F5 with no launch.json: debug the active .auk file.
 const debugConfigs = {
   resolveDebugConfiguration(folder, config) {
     if (!config.type && !config.request && !config.name) {
       const editor = vscode.window.activeTextEditor;
-      if (!editor || editor.document.languageId !== 'duck') return config;
+      if (!editor || editor.document.languageId !== 'auk') return config;
       return fileConfig(editor.document.uri.fsPath);
     }
     if (!config.program) {
-      return vscode.window.showErrorMessage('Duck: the launch configuration needs a "program" (a .duck file).').then(() => undefined);
+      return vscode.window.showErrorMessage('Auk: the launch configuration needs a "program" (a .auk file).').then(() => undefined);
     }
     return config;
   },
 };
 
 function fileConfig(file) {
-  return { type: 'duck', request: 'launch', name: 'Debug Duck file', program: file, cwd: require('path').dirname(file) };
+  return { type: 'auk', request: 'launch', name: 'Debug Auk file', program: file, cwd: require('path').dirname(file) };
 }
 
 async function debugFile() {
   const editor = vscode.window.activeTextEditor;
-  if (!editor || editor.document.languageId !== 'duck') {
-    vscode.window.showWarningMessage('Open a .duck file to debug it.');
+  if (!editor || editor.document.languageId !== 'auk') {
+    vscode.window.showWarningMessage('Open a .auk file to debug it.');
     return;
   }
   const doc = editor.document;
@@ -124,13 +124,13 @@ async function debugFile() {
 
 function activate(context) {
   context.subscriptions.push(
-    vscode.debug.registerDebugAdapterDescriptorFactory('duck', debugAdapter),
-    vscode.debug.registerDebugConfigurationProvider('duck', debugConfigs),
-    vscode.commands.registerCommand('duck.debug', debugFile),
-    vscode.commands.registerCommand('duck.run', () => runInTerminal('run', [])),
-    vscode.commands.registerCommand('duck.test', () => runInTerminal('test', [])),
-    vscode.commands.registerCommand('duck.runWithArgs', async () => {
-      const key = 'duck.lastArgs:' + (vscode.window.activeTextEditor?.document.uri.toString() ?? '');
+    vscode.debug.registerDebugAdapterDescriptorFactory('auk', debugAdapter),
+    vscode.debug.registerDebugConfigurationProvider('auk', debugConfigs),
+    vscode.commands.registerCommand('auk.debug', debugFile),
+    vscode.commands.registerCommand('auk.run', () => runInTerminal('run', [])),
+    vscode.commands.registerCommand('auk.test', () => runInTerminal('test', [])),
+    vscode.commands.registerCommand('auk.runWithArgs', async () => {
+      const key = 'auk.lastArgs:' + (vscode.window.activeTextEditor?.document.uri.toString() ?? '');
       const value = await vscode.window.showInputBox({
         prompt: 'Arguments for the program (space-separated; quote ones with spaces)',
         value: context.workspaceState.get(key, ''),
@@ -142,12 +142,12 @@ function activate(context) {
     vscode.window.onDidCloseTerminal((t) => {
       if (t === terminal) terminal = undefined;
     }),
-    vscode.commands.registerCommand('duck.restartServer', async () => {
+    vscode.commands.registerCommand('auk.restartServer', async () => {
       await stop();
       await start(context);
     }),
     vscode.workspace.onDidChangeConfiguration(async (e) => {
-      if (e.affectsConfiguration('duck.path')) {
+      if (e.affectsConfiguration('auk.path')) {
         await stop();
         await start(context);
       }

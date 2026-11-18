@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate syntaxes/duck.tmLanguage.json without dependencies.
+"""Validate syntaxes/auk.tmLanguage.json without dependencies.
 
 Checks: the JSON parses, every `include` target exists, and every regex
 compiles under Python `re` (after translating some Oniguruma-only syntax).
@@ -11,7 +11,7 @@ import re
 import sys
 from pathlib import Path
 
-GRAMMAR = Path(__file__).resolve().parent.parent / "syntaxes" / "duck.tmLanguage.json"
+GRAMMAR = Path(__file__).resolve().parent.parent / "syntaxes" / "auk.tmLanguage.json"
 REGEX_KEYS = ("match", "begin", "end", "while")
 
 
