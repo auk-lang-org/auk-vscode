@@ -100,14 +100,16 @@ or symlink the folder and reload VS Code:
 ln -s "$PWD/editors/vscode" ~/.vscode/extensions/auk-lang
 ```
 
-Build `auk` (`cargo build --release` at the repository root) and put it on `PATH`, or point
-`auk.path` at `target/release/auk`.
+Build and install `auk` (`./build.sh --install` at the repository root: `~/.auk/bin/auk`) and put
+it on `PATH`, or point `auk.path` at `~/.auk/bin/auk` (or `target/bin/auk`).
 
 ## Testing
 
-The debug adapter is tested end to end by `cargo test --test debug` (it speaks DAP to
-`auk dap`). The language server is tested end to end by `cargo test --test v2_lsp` (it spawns `auk lsp`
-and speaks JSON-RPC to it).
+The extension itself runs end to end in a real VS Code with `scripts/vscode_e2e.sh` (symbols,
+hover, definition, diagnostics, formatting, and a debug session to a breakpoint, its stack,
+variables and evaluate). The debug adapter and the language server are also tested by the
+integration tests (`tests/runner/`, suites `debug` and `lsp`: they speak DAP and JSON-RPC to
+`auk dap` and `auk lsp`).
 
 The grammar:
 
