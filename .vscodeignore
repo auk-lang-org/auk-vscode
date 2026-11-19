@@ -1,0 +1,6 @@
+.e2e/**
+.gitignore
+scripts/**
+test/**
+*.vsix
+**/.DS_Store
