@@ -1,122 +1,127 @@
 # Auk for VS Code
 
-Syntax highlighting, editor configuration and language-server support for the Auk language
-(`.auk` files).
+Language support for [Auk](https://auk-lang.org), a statically typed language that compiles to
+native code: errors as you type, quick fixes, hover, go to definition, formatting, one-click run
+and test, and a full debugger.
 
-## What it provides
+## Getting started
 
-- Language id `auk` for `*.auk` files; `raft.toml` is opened as TOML.
-- A TextMate grammar (`syntaxes/auk.tmLanguage.json`) covering:
-  - keywords, effect names after `uses`, builtin types (`int float bool char str Value`)
-  - function names in `fn` declarations, capitalized type names, enum variants
-  - numbers (`1_000`, `0xff`, `0b1010`, `0o755`, `3.14`, `1e-9`)
-  - chars and strings with escapes (`\n`, `\u{1F986}`, ...)
-  - string interpolation `{expr}` highlighted as embedded Auk code (nested braces
-    and nested strings work), `{{`/`}}` escapes, and format specs (`{x:.2}`, `{n:>5}`)
-  - raw `r"..."`, triple-quoted `"""..."""` and `r"""..."""` strings
-  - `//`, nested `/* */`, and `///` doc comments (distinct scope)
-  - operators (`=> |> ?. .. ..= +% -% *% **`, ...) and `T?` / `T!` type suffixes
-  - the hole `??`, scoped `invalid.illegal.hole.auk` so unfilled holes stand out
-- Language configuration: comment toggling, bracket matching, auto-closing pairs,
-  indentation on `{` / `}`, `///` continuation on Enter, and `// region` folding markers.
+1. Install Auk:
 
-## Run and test
+   ```sh
+   curl -fsSL https://auk-lang.org/install.sh | sh
+   ```
 
-A `.auk` editor gets buttons in its title bar (top right): **Run** (▶, also `Ctrl+F5`), **Run
-with Arguments…** (asks for them and remembers the last ones per file), **Test** (beaker) and
-**Debug** (also `F5`). Run and Test save the file and run `auk run <file>` / `auk test <file>`
-in an "Auk" terminal from the file's folder.
+   This puts `auk` and `raft` in `~/.auk/bin`. The extension finds them there even when VS Code
+   was started from the Dock and doesn't see your shell's `PATH`.
 
-## Debugging
+2. Install this extension and open a `.auk` file.
 
-`F5` (or **Auk: Debug File**) debugs the active file through `auk dap`: click in the gutter
-for breakpoints (a line without code moves to the next one that has some), add function
-breakpoints in the Breakpoints view, and choose whether panics stop (**Uncaught panics**, on by
-default, or **All panics**, also those inside `catch`). When it stops: the call stack (one thread
-per task), locals with their parts (struct fields, enum variants, list elements, map entries)
-expandable, hover a name or a path like `p.x` / `xs[2]`, any Auk expression in Watch or the Debug
-Console (`xs.map(x => x * 2)`, calls to your functions; `total = 0` sets a `var`), edit a local's
-value in the Variables view, conditional breakpoints (`n > 3`), step over / into / out, pause. The
-program's output goes to the Debug Console. A `launch.json` entry:
+## Features
+
+### Errors as you type
+
+Every edit is checked by the compiler (`auk lsp`), in the context of its project: the nearest
+`raft.toml`, its `src/` modules and the dependencies installed in `.raft/`. Diagnostics carry
+their `E0xxx` codes and notes. Errors in other modules show up on those files.
+
+### Quick fixes
+
+The compiler's fix-its are offered as quick fixes (`Cmd+.` / `Ctrl+.`): a missing `?` or `&`,
+`->` instead of `:`, a misspelled name or type, a missing `..` in a struct pattern, and more.
+
+### Hover and go to definition
+
+Hover shows the type of any expression or binding, and for functions their signature and `///`
+docs. Go to definition works for locals, constants, functions, structs, enums, shapes, variants
+and fields, across modules and dependencies.
+
+### Formatting and outline
+
+**Format Document** runs `auk fmt`. The **Outline** view lists functions, structs, enums, shapes,
+tests and constants.
+
+### Run and test
+
+A `.auk` editor gets buttons in its title bar:
+
+- **Run** (▶, also `Ctrl+F5`): `auk run <file>` in an "Auk" terminal.
+- **Run with Arguments…**: asks for the arguments and remembers the last ones per file.
+- **Test** (beaker): `auk test <file>`.
+- **Debug** (also `F5`).
+
+### Debugging
+
+`F5` (or **Auk: Debug File**) debugs the active file through `auk dap`:
+
+- Line breakpoints, conditional breakpoints (`n > 3`) and function breakpoints. A breakpoint on
+  a line without code moves to the next line that has some.
+- Stop on **Uncaught panics** (the default) or **All panics**, including those inside `catch`.
+- The call stack, with one thread per task.
+- Locals that expand into their parts: struct fields, enum variants, list elements, map entries.
+  Edit a local's value in the Variables view.
+- Hover a name or a path like `p.x` or `xs[2]`.
+- Evaluate any Auk expression in Watch or the Debug Console, such as `xs.map(x => x * 2)` or a
+  call to one of your functions. `total = 0` sets a `var`.
+- Step over, into and out, and pause. The program's output goes to the Debug Console.
+
+A `launch.json` entry:
 
 ```json
 { "type": "auk", "request": "launch", "name": "Debug", "program": "${file}",
   "cwd": "${fileDirname}", "args": [], "stopOnEntry": false }
 ```
 
-## Language server
+### Highlighting and editing
 
-`extension.js` (plain JavaScript, no build step) starts `auk lsp` through
-[`vscode-languageclient`](https://www.npmjs.com/package/vscode-languageclient) whenever a
-`.auk` file is opened. The server re-checks the buffer on every edit, in the file's project
-context (the nearest `raft.toml`, its `src/` modules and the dependencies installed in
-`.raft/`), and provides:
+- Highlighting for the whole language: string interpolation (`{expr}`, with format specs like
+  `{x:.2}`), raw and triple-quoted strings, effect names after `uses`, `T?` / `T!` types, and
+  unfilled `??` holes, which stand out.
+- Comment toggling, bracket matching, auto-closing pairs, indentation on `{` / `}`, `///`
+  continued on Enter, and `// region` folding.
+- `raft.toml` files open as TOML.
+- Two color themes, **Ice Floe** and **Ice Floe Night**, in Auk's colors.
 
-- **Diagnostics** with their `E0xxx` codes and notes (shown as related information). Errors in
-  other modules of the program are reported on those files.
-- **Quick fixes** from the compiler's fix-its: missing `?`, missing `&`, `->` vs `:`, a
-  misspelled name or type, a missing `..` in a struct pattern, and so on (`Cmd+.` / `Ctrl+.`).
-- **Hover**: the type of the expression or binding under the cursor; for functions their
-  signature and `///` docs.
-- **Go to definition** for locals, constants, functions (the first clause of a clause group),
-  structs, enums, shapes, variants and fields, across modules and dependencies.
-- **Format Document** (`auk fmt`) and the **Outline** view (functions, structs, enums, shapes,
-  tests, constants).
-
-Settings:
+## Settings
 
 | Setting | Default | |
 | --- | --- | --- |
-| `auk.path` | `auk` | the `auk` executable (absolute path, or a name on `PATH`) |
-| `auk.trace.server` | `off` | log the JSON-RPC traffic to the "Auk Language Server" output |
+| `auk.path` | `auk` | the `auk` executable: an absolute path, or a name on the `PATH` |
+| `auk.trace.server` | `off` | log the language server's JSON-RPC traffic to the "Auk Language Server" output |
 
-The command **Auk: Restart Language Server** restarts it (it also restarts when `auk.path`
-changes).
+`auk` on the `PATH` is used first, then `~/.auk/bin/auk`. **Auk: Restart Language Server**
+restarts the server; it also restarts when `auk.path` changes.
 
-Known limits: hover and type-based definitions need the program to type-check (while it
-doesn't, go to definition falls back to looking names up in the module tree); other modules are
-read from disk, so unsaved edits in another open file are not seen until it is saved; the
-compiled-in core prelude has no file to jump to.
+## Known limits
 
-## Install locally
+- Hover and type-based go to definition need the program to type-check. While it doesn't, go to
+  definition falls back to looking names up in the module tree.
+- Other modules are read from disk, so unsaved edits in another open file aren't seen until
+  it's saved.
+- The compiled-in core library has no source file to jump to.
 
-Install the client library first (the only dependency):
+## Development
+
+The extension is plain JavaScript with no build step: `extension.js` starts `auk lsp` through
+[`vscode-languageclient`](https://www.npmjs.com/package/vscode-languageclient).
 
 ```sh
 npm install
+ln -s "$PWD" ~/.vscode/extensions/auk-lang    # run from this checkout, then reload VS Code
+npx @vscode/vsce package                      # or build a .vsix
 ```
 
-then either package it:
+Tests:
 
-```sh
-npx @vscode/vsce package          # produces auk-lang-0.1.0.vsix
-code --install-extension auk-lang-0.1.0.vsix
-```
+- `scripts/e2e.sh [<auk>...]` runs the extension in a real VS Code: symbols, hover, definition,
+  diagnostics, formatting, and a debug session to a breakpoint with its stack, variables and
+  evaluate.
+- `python3 -I test/check.py` checks the grammar (JSON, include targets, regexes). To check
+  scopes by eye, open `test/sample.auk` and run **Developer: Inspect Editor Tokens and Scopes**.
+- The language server and debug adapter are also tested in the
+  [Auk repository](https://github.com/auk-lang-org/auk) (`tests/runner/`, suites `lsp` and
+  `debug`).
 
-or symlink the folder and reload VS Code:
+## License
 
-```sh
-ln -s "$PWD" ~/.vscode/extensions/auk-lang
-```
-
-Build and install `auk` (`./build.sh --install` in the Auk repository: `~/.auk/bin/auk`). The
-extension finds it there even when VS Code's PATH doesn't include `~/.auk/bin` (started from the
-Dock, VS Code doesn't read your shell profile); `auk` on the PATH comes first, and `auk.path`
-picks any other binary (e.g. `target/bin/auk`).
-
-## Testing
-
-The extension itself runs end to end in a real VS Code with `scripts/e2e.sh` (symbols,
-hover, definition, diagnostics, formatting, and a debug session to a breakpoint, its stack,
-variables and evaluate). The debug adapter and the language server are also tested by the
-integration tests in the Auk repository (`tests/runner/`, suites `debug` and `lsp`: they speak DAP and JSON-RPC to
-`auk dap` and `auk lsp`).
-
-The grammar:
-
-```sh
-python3 -I test/check.py     # JSON, include targets, regex compilation
-```
-
-Open `test/sample.auk` and run **Developer: Inspect Editor Tokens and Scopes**
-to check scopes by eye.
+MIT

@@ -1,7 +1,7 @@
 {
   "name": "auk-lang",
   "displayName": "Auk Language",
-  "description": "Syntax highlighting, diagnostics, quick fixes, hover, go to definition and formatting for the Auk programming language",
+  "description": "Auk language support: diagnostics, quick fixes, hover, go to definition, formatting, run/test buttons and a debugger",
   "version": "0.1.0",
   "publisher": "Auk-Lang",
   "license": "MIT",
@@ -10,6 +10,17 @@
     "url": "https://github.com/auk-lang-org/auk-vscode"
   },
   "homepage": "https://auk-lang.org",
+  "icon": "icons/icon.png",
+  "galleryBanner": {
+    "color": "#12212b",
+    "theme": "dark"
+  },
+  "keywords": [
+    "auk",
+    "language server",
+    "debugger",
+    "raft"
+  ],
   "engines": {
     "vscode": "^1.82.0"
   },
