@@ -83,7 +83,6 @@ compiled-in core prelude has no file to jump to.
 Install the client library first (the only dependency):
 
 ```sh
-cd editors/vscode
 npm install
 ```
 
@@ -97,20 +96,20 @@ code --install-extension auk-lang-0.1.0.vsix
 or symlink the folder and reload VS Code:
 
 ```sh
-ln -s "$PWD/editors/vscode" ~/.vscode/extensions/auk-lang
+ln -s "$PWD" ~/.vscode/extensions/auk-lang
 ```
 
-Build and install `auk` (`./build.sh --install` at the repository root: `~/.auk/bin/auk`). The
+Build and install `auk` (`./build.sh --install` in the Auk repository: `~/.auk/bin/auk`). The
 extension finds it there even when VS Code's PATH doesn't include `~/.auk/bin` (started from the
 Dock, VS Code doesn't read your shell profile); `auk` on the PATH comes first, and `auk.path`
 picks any other binary (e.g. `target/bin/auk`).
 
 ## Testing
 
-The extension itself runs end to end in a real VS Code with `scripts/vscode_e2e.sh` (symbols,
+The extension itself runs end to end in a real VS Code with `scripts/e2e.sh` (symbols,
 hover, definition, diagnostics, formatting, and a debug session to a breakpoint, its stack,
 variables and evaluate). The debug adapter and the language server are also tested by the
-integration tests (`tests/runner/`, suites `debug` and `lsp`: they speak DAP and JSON-RPC to
+integration tests in the Auk repository (`tests/runner/`, suites `debug` and `lsp`: they speak DAP and JSON-RPC to
 `auk dap` and `auk lsp`).
 
 The grammar:

@@ -1,7 +1,7 @@
 // End-to-end check of the extension inside a real VS Code (extension host), against the `auk`
 // named by the workspace's `auk.path` setting: the language server (symbols, hover,
 // diagnostics, formatting) and the debugger (breakpoint, stack, evaluate, continue, output).
-// Run by scripts/vscode_e2e.sh, which makes the workspace and launches VS Code with
+// Run by scripts/e2e.sh, which makes the workspace and launches VS Code with
 // --extensionTestsPath pointing here. Writes a JSON report to $AUK_E2E_OUT; fails (rejects) on
 // the first check that doesn't hold.
 const vscode = require('vscode');

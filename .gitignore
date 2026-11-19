@@ -1,2 +1,4 @@
 node_modules/
 *.vsix
+.e2e/
+.DS_Store
