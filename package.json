@@ -73,7 +73,7 @@
         "auk.path": {
           "type": "string",
           "default": "auk",
-          "markdownDescription": "Path to the `auk` executable that runs the language server (`auk lsp`)."
+          "markdownDescription": "Path to the `auk` executable (language server `auk lsp`, debugger `auk dap`). The default `auk` is looked up on the PATH, then in `~/.auk/bin` (where `./build.sh --install` puts it)."
         },
         "auk.trace.server": {
           "type": "string",

@@ -6,8 +6,32 @@ const { LanguageClient, TransportKind } = require('vscode-languageclient/node');
 
 let client;
 
+// The auk executable: the `auk.path` setting, else `auk` on the PATH, else `./build.sh --install`'s
+// ~/.auk/bin/auk (VS Code started from the Dock doesn't see a PATH set in the shell's profile).
+function aukPath() {
+  const set = vscode.workspace.getConfiguration('auk').get('path');
+  if (set && set !== 'auk') return set;
+  const fs = require('fs');
+  const path = require('path');
+  const exe = process.platform === 'win32' ? 'auk.exe' : 'auk';
+  for (const dir of (process.env.PATH || '').split(path.delimiter)) {
+    if (!dir) continue;
+    const p = path.join(dir, exe);
+    try {
+      fs.accessSync(p, fs.constants.X_OK);
+      return p;
+    } catch (_) {}
+  }
+  const installed = path.join(require('os').homedir(), '.auk', 'bin', exe);
+  try {
+    fs.accessSync(installed, fs.constants.X_OK);
+    return installed;
+  } catch (_) {}
+  return 'auk';
+}
+
 function serverOptions() {
-  const command = vscode.workspace.getConfiguration('auk').get('path') || 'auk';
+  const command = aukPath();
   const run = { command, args: ['lsp'], transport: TransportKind.stdio };
   return { run, debug: run };
 }
@@ -20,10 +44,10 @@ async function start(context) {
   try {
     await client.start();
   } catch (err) {
-    const path = vscode.workspace.getConfiguration('auk').get('path') || 'auk';
+    const path = aukPath();
     vscode.window.showErrorMessage(
       `Could not start \`${path} lsp\`: ${err && err.message ? err.message : err}. ` +
-        'Install auk or set "auk.path" to the auk executable.'
+        'Install auk (./build.sh --install: ~/.auk/bin/auk) or set "auk.path" to the auk executable.'
     );
   }
 }
@@ -74,7 +98,7 @@ async function runInTerminal(sub, args) {
     terminal = vscode.window.createTerminal({ name: 'Auk', cwd: dir });
   }
   terminal.show(true);
-  const auk = vscode.workspace.getConfiguration('auk').get('path') || 'auk';
+  const auk = aukPath();
   const cmd = [auk, sub, file, ...args].map(quote).join(' ');
   terminal.sendText(`cd ${quote(dir)} && ${cmd}`);
 }
@@ -82,7 +106,7 @@ async function runInTerminal(sub, args) {
 // The debugger: `auk dap` speaks the Debug Adapter Protocol on stdin/stdout.
 const debugAdapter = {
   createDebugAdapterDescriptor() {
-    const auk = vscode.workspace.getConfiguration('auk').get('path') || 'auk';
+    const auk = aukPath();
     return new vscode.DebugAdapterExecutable(auk, ['dap']);
   },
 };

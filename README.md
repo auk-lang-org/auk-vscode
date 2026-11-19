@@ -100,8 +100,10 @@ or symlink the folder and reload VS Code:
 ln -s "$PWD/editors/vscode" ~/.vscode/extensions/auk-lang
 ```
 
-Build and install `auk` (`./build.sh --install` at the repository root: `~/.auk/bin/auk`) and put
-it on `PATH`, or point `auk.path` at `~/.auk/bin/auk` (or `target/bin/auk`).
+Build and install `auk` (`./build.sh --install` at the repository root: `~/.auk/bin/auk`). The
+extension finds it there even when VS Code's PATH doesn't include `~/.auk/bin` (started from the
+Dock, VS Code doesn't read your shell profile); `auk` on the PATH comes first, and `auk.path`
+picks any other binary (e.g. `target/bin/auk`).
 
 ## Testing
 
