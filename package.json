@@ -3,7 +3,7 @@
   "displayName": "Auk Language",
   "description": "Syntax highlighting, diagnostics, quick fixes, hover, go to definition and formatting for the Auk programming language",
   "version": "0.1.0",
-  "publisher": "aukc",
+  "publisher": "Auk-Lang",
   "license": "MIT",
   "repository": {
     "type": "git",
